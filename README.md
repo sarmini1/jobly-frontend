@@ -1,7 +1,7 @@
 # Running the Back End
 
-This app makes API calls to a backend hosted at: https://saa-jobly-backend.onrender.com
-Please export the following environmental variable before running the app:
+- This app makes API calls to a backend hosted at: https://saa-jobly-backend.onrender.com
+- Please export the following environmental variable before running the app:
 `REACT_APP_BASE_URL=https://saa-jobly-backend.onrender.com`
 
 # Getting Started with Create React App
