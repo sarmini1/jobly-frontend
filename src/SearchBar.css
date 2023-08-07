@@ -1,0 +1,19 @@
+input {
+    padding: 5px;
+    border: 2px solid #a44a3f;
+    border-radius: 5px;
+    margin-top: 6px;
+    width: 50%;
+}
+
+.SearchBar {
+    padding-top: 1%;
+    vertical-align: baseline;  
+    display: flex;
+    justify-content: center;
+}
+
+.submit {
+    max-height: 40px;
+    vertical-align: middle; 
+}

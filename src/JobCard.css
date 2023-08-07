@@ -1,0 +1,37 @@
+.JobCard {
+    margin: 2% 5% 2% 5%;
+    padding: 3%;
+    color: black;
+    position: relative;
+    border-radius: 5px;
+}
+
+.JobCard:hover{
+    box-shadow: 10px 5px 5px rgba(37, 37, 37, 0.507);
+    color: rgb(65, 65, 153);
+    border-radius: 5px;
+}
+
+
+.JobCard-button {
+    position: absolute;
+    right: 3%;
+    bottom: 5px;
+}
+
+h5 {
+    font-family: 'Comfortaa', cursive;
+    padding-top: 5px;
+    color: #2d4349;
+}
+
+.JobCard-applied  {
+    background-color: rgb(84, 89, 94) !important;
+    color: white !important;
+}
+
+.JobCard-apply:hover {
+    color: #a44a3f;
+    background-color: #f6f4d2;
+    border: 2px solid #a44a3f;
+}

@@ -1,0 +1,28 @@
+.Homepage {
+    padding-top: 20%;
+}
+
+h1 {
+    font-size: 4em;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: rgb(37, 34, 83);
+    border:rgb(37, 34, 83);
+    margin: 1%;
+    padding: 10px 15px 10px 15px;
+}
+
+.btn:hover {
+    color: #a44a3f;
+    background-color: #f6f4d2;
+}
+
+p {
+    font-family: 'Open Sans', sans-serif;
+}
+
+h4 {
+    color: #2d4349;
+}

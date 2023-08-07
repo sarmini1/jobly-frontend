@@ -1,10 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
 .App {
   text-align: center;
+  background-color: #fffbda;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+.CompanyList-list{
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -35,4 +44,12 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+h1 {
+  font-family: 'Comfortaa', cursive;
+}
+
+h4 {
+  font-family: 'Comfortaa', cursive;
 }

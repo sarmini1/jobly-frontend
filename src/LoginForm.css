@@ -1,0 +1,27 @@
+.LoginForm {
+    padding: 5% 5% 5% 5%;
+    text-align: left;
+}
+
+.btn {
+    background-color: #a44a3f;
+    margin: 5px;
+    font-family: 'Comfortaa', cursive;
+    color: white;
+}
+
+h3 {
+    color: #a44a3f;
+    font-family: 'Comfortaa', cursive;
+}
+
+label {
+    color: #a44a3f;
+    font-family: 'Comfortaa', cursive;
+    line-height: 2px;
+}
+
+input {
+    margin-bottom: 15px;
+}
+
