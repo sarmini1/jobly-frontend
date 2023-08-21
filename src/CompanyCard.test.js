@@ -4,7 +4,7 @@ import { MemoryRouter } from "react-router-dom";
 import CompanyCard from "./CompanyCard";
 
 const testCompany = {
-  "name": "test company name",
+  "name": "Test Company Name",
   "handle": "test-company-handle",
   "description": "Great company to work for!",
   // "logoUrl":
@@ -25,4 +25,14 @@ it("matches snapshot", function () {
     </MemoryRouter>
   );
   expect(container).toMatchSnapshot();
+});
+
+it("renders expected company info", function () {
+  const { container } = render(
+    <MemoryRouter>
+      <CompanyCard company={testCompany} />
+    </MemoryRouter>
+  );
+  expect(container).toContainHTML('<p>Great company to work for!</p>')
+  expect(container).toContainHTML('<b>Test Company Name</b>')
 });
