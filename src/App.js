@@ -29,23 +29,6 @@ function App() {
   const [isLoadingUser, setIsLoadingUser] = useState(true);
   const [fetchUserErrors, setFetchUserErrors] = useState(null);
 
-  async function logIn(loginFormData) {
-    let token = await JoblyApi.logInUser(
-      {
-        username: loginFormData.username,
-        password: loginFormData.password
-      });
-    JoblyApi.token = token;
-    window.localStorage.setItem('token', token); //could replace this to use =
-    setToken(token);
-  }
-
-  async function signUp(signUpFormData) {
-    let token = await JoblyApi.signUpUser(signUpFormData);
-    JoblyApi.token = token;
-    setToken(token);
-  }
-
   useEffect(function setCurrentUserOrError() {
     async function fetchUser() {
       if (token) {
@@ -65,20 +48,71 @@ function App() {
     fetchUser();
   }, [token]);
 
+  /** logIn
+   *
+   * Takes incoming form data, calls API to log user in, sets
+   * token state and localStorage up with token received from API.
+   * Returns undefined.
+   *
+   * @param {object} loginFormData
+   */
+  async function logIn(loginFormData) {
+    let token = await JoblyApi.logInUser(
+      {
+        username: loginFormData.username,
+        password: loginFormData.password
+      });
+    JoblyApi.token = token;
+    window.localStorage.setItem('token', token); //could replace this to use =
+    setToken(token);
+  }
+
+  /** signUp
+   *
+   * Takes incoming form data, calls API to sign user up, sets
+   * token state and localStorage up with token received from API.
+   * Returns undefined.
+   *
+   * @param {object} signUpFormData
+   */
+  async function signUp(signUpFormData) {
+    let token = await JoblyApi.signUpUser(signUpFormData);
+    JoblyApi.token = token;
+    setToken(token);
+  }
+
+  /** logOut
+   *
+   * Clears out token and currentUser states as well as localStorage entirely.
+   * Accepts no arguments and returns undefined.
+   */
   function logOut() {
     setToken(null);
     setCurrentUser(null);
     window.localStorage.clear(); //TODO can switch to removeItem for the token instead of clear
   }
 
+  /** updateUserAfterJobApp
+   *
+   * Sets currentUser state to include updated list of job applications.
+   * Returns undefined.
+   *
+   * @param {int} jobId
+   */
   function updateUserAfterJobApp(jobId) {
     setCurrentUser(currUser => ({
       ...currUser,
-      applications: currUser.applications.add(
-        jobId)
+      applications: currUser.applications.add(jobId)
     }));
   }
 
+  /** updateUserInfo
+   *
+   * Takes incoming form data, calls API to autnenticate and upate user, sets
+   * user state to include new information if successful. Returns undefined.
+   *
+   * @param {object} profileFormData
+   */
   async function updateUserInfo(profileFormData) {
 
     const { username, password, firstName, lastName, email } = profileFormData;
