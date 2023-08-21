@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<div>
+  <div
+    class="CompanyCard"
+  >
+    <a
+      href="/companies/test-company-handle"
+      style="text-decoration: none;"
+    >
+      <div
+        class="CompanyCard-card card"
+      >
+        <div
+          class="justify-content-between text-left card-title h5"
+        >
+          <div
+            class="row"
+          >
+            <b>
+              test company name
+            </b>
+          </div>
+        </div>
+        <div
+          class="text-left card-body"
+        >
+          <p>
+            Great company to work for!
+          </p>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+`;

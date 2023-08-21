@@ -7,7 +7,7 @@ import './CompanyCard.css';
  * CompanyCard Component
  *
  * Props:
- * - company {}
+ * - company { name, handle, description, logoUrl }
  *
  * CompanyList -> CompanyCard
  */
