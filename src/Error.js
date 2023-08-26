@@ -10,11 +10,14 @@ import { Alert } from "react-bootstrap";
  *
  * Most components --> Error
  */
-function Error({error}) {
+function Error({ error }) {
   return (
-    <Alert variant='danger'>
-      <p>{error}</p>
-    </Alert>
+    <div className="Error">
+      <Alert variant='danger'>
+        <p>{error}</p>
+      </Alert>
+    </div>
+
   );
 }
 

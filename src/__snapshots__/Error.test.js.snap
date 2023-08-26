@@ -3,12 +3,16 @@
 exports[`matches snapshot 1`] = `
 <div>
   <div
-    class="fade alert alert-danger show"
-    role="alert"
+    class="Error"
   >
-    <p>
-      test error text
-    </p>
+    <div
+      class="fade alert alert-danger show"
+      role="alert"
+    >
+      <p>
+        test error text
+      </p>
+    </div>
   </div>
 </div>
 `;
