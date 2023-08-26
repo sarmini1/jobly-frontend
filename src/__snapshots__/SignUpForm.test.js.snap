@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<div>
+  <div
+    class="SignUpForm"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="col-1 col-sm-2 col-lg-4"
+      />
+      <div
+        class="col-10 col-sm-8 col-lg-4"
+      >
+        <h3>
+          Sign Up
+        </h3>
+        <form
+          class=""
+        >
+          <label
+            class="form-label"
+            for="signUpForm-first-name"
+          >
+            First Name
+          </label>
+          <input
+            autocomplete="first-name"
+            class="form-control"
+            id="signUpForm-first-name"
+            name="firstName"
+            required=""
+            type="text"
+            value=""
+          />
+          <label
+            class="form-label"
+            for="signUpForm-last-name"
+          >
+            Last Name
+          </label>
+          <input
+            autocomplete="last-name"
+            class="form-control"
+            id="signUpForm-last-name"
+            name="lastName"
+            required=""
+            type="text"
+            value=""
+          />
+          <label
+            class="form-label"
+            for="signUpForm-email"
+          >
+            Email
+          </label>
+          <input
+            autocomplete="email"
+            class="form-control"
+            id="signUpForm-email"
+            name="email"
+            required=""
+            type="text"
+            value=""
+          />
+          <label
+            class="form-label"
+            for="signUpForm-username"
+          >
+            Username
+          </label>
+          <input
+            autocomplete="username"
+            class="form-control"
+            id="signUpForm-username"
+            name="username"
+            required=""
+            type="text"
+            value=""
+          />
+          <label
+            class="form-label"
+            for="signUpForm-password"
+          >
+            Password
+          </label>
+          <input
+            autocomplete="current-password"
+            class="form-control"
+            id="signUpForm-password"
+            name="password"
+            required=""
+            type="password"
+            value=""
+          />
+          <button
+            class="btn"
+            type="submit"
+          >
+            Sign Up!
+          </button>
+        </form>
+      </div>
+      <div
+        class="col-1 col-sm-2 col-lg-4"
+      />
+    </div>
+  </div>
+</div>
+`;

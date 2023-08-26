@@ -65,12 +65,12 @@ it("renders empty form successfully", async function () {
 });
 
 it("calls prop function upon submission", async function () {
-  const mockGetJobs = jest.fn();
+  const mockLogIn = jest.fn();
 
   await act(async () => {
     render(
       <MemoryRouter>
-        <LoginForm logIn={mockGetJobs} />
+        <LoginForm logIn={mockLogIn} />
       </MemoryRouter>
       , container);
   });
@@ -85,23 +85,23 @@ it("calls prop function upon submission", async function () {
     fireEvent.submit(form);
   });
 
-  expect(mockGetJobs).toHaveBeenCalledWith(
+  expect(mockLogIn).toHaveBeenCalledWith(
     { username: "test-username", password: "test-password" }
   );
-  expect(mockGetJobs).toBeCalledTimes(1);
+  expect(mockLogIn).toBeCalledTimes(1);
 
-  mockGetJobs.mockRestore();
+  mockLogIn.mockRestore();
 });
 
 it("shows errors when submission function throws them", async function () {
-  const mockGetJobs = jest
+  const mockLogIn = jest
     .fn()
     .mockImplementationOnce(() => Promise.reject(["mock error message"]));
 
   await act(async () => {
     render(
       <MemoryRouter>
-        <LoginForm logIn={mockGetJobs} />
+        <LoginForm logIn={mockLogIn} />
       </MemoryRouter>
       , container);
   });
@@ -116,10 +116,10 @@ it("shows errors when submission function throws them", async function () {
     fireEvent.submit(form);
   });
 
-  expect(mockGetJobs).toHaveBeenCalledWith(
+  expect(mockLogIn).toHaveBeenCalledWith(
     { username: "test-username", password: "test-password" }
   );
-  expect(mockGetJobs).toBeCalledTimes(1);
+  expect(mockLogIn).toBeCalledTimes(1);
 
   // shows errors
   const error = container.querySelector(".Error");
@@ -129,19 +129,19 @@ it("shows errors when submission function throws them", async function () {
   // holds onto initial inputs in form
   expect(usernameInput).toContainHTML("test-username");
 
-  mockGetJobs.mockRestore();
+  mockLogIn.mockRestore();
 });
 
 
 it("can resubmit form when errors are present", async function () {
-  const mockGetJobs = jest
+  const mockLogIn = jest
     .fn()
     .mockImplementationOnce(() => Promise.reject(["mock error message"]));
 
   await act(async () => {
     render(
       <MemoryRouter>
-        <LoginForm logIn={mockGetJobs} />
+        <LoginForm logIn={mockLogIn} />
       </MemoryRouter>
       , container);
   });
@@ -156,10 +156,10 @@ it("can resubmit form when errors are present", async function () {
     fireEvent.submit(form);
   });
 
-  expect(mockGetJobs).toHaveBeenCalledWith(
+  expect(mockLogIn).toHaveBeenCalledWith(
     { username: "test-username", password: "test-password" }
   );
-  expect(mockGetJobs).toBeCalledTimes(1);
+  expect(mockLogIn).toBeCalledTimes(1);
 
   // shows errors
   const error = container.querySelector(".Error");
@@ -173,10 +173,10 @@ it("can resubmit form when errors are present", async function () {
     fireEvent.submit(form);
   });
 
-  expect(mockGetJobs).toHaveBeenCalledWith(
+  expect(mockLogIn).toHaveBeenCalledWith(
     { username: "new-username2", password: "new-password2" }
   );
-  expect(mockGetJobs).toBeCalledTimes(2);
+  expect(mockLogIn).toBeCalledTimes(2);
 
-  mockGetJobs.mockRestore();
+  mockLogIn.mockRestore();
 });
