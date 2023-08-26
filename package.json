@@ -20,8 +20,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "surge": "REACT_APP_BASE_URL=https://jobly-backend.herokuapp.com npm run build && cp build/index.html build/200.html && surge build joelburton-jobly.surge.sh && echo http://joelburton-jobly.surge.sh"
+    "test-coverage": "react-scripts test --coverage --watchAll=false",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -39,6 +39,14 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "axios": "axios/dist/node/axios.cjs"
+    },
+    "coveragePathIgnorePatterns" : [
+      "<rootDir>/src/serviceWorker.js"
     ]
   }
 }

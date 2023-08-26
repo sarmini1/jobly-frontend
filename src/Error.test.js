@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import Error from "./Error";
 
+
 it('mounts without crashing', function () {
   render(
     <Error error={"test error text"} />
