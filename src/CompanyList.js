@@ -32,6 +32,7 @@ function CompanyList({ currentUser }) {
   useEffect(function () {
     async function getCompanies() {
       try {
+        setErrors([]);
         let companies = await JoblyApi.getCompanies(searchData.term);
         setCompanies(companies);
         setIsLoadingCompanyList(false);
@@ -66,14 +67,16 @@ function CompanyList({ currentUser }) {
     );
   }
 
-  //TODO: make new component for not-found element to replace below link
-  if (errors.length > 0) {
+  /** populateErrors
+   *
+   * Maps through errors state and renders error component for each
+   *
+   * @returns
+   */
+  function populateErrors() {
     return (
       <div>
         {errors.map((e, idx) => <Error key={idx} error={e} />)}
-        <Link to={`/`} style={{ textDecoration: "none" }}>
-          <h2 style={{ color: "grey" }}>Back to Home</h2>
-        </Link>
       </div>
     );
   }
@@ -83,6 +86,7 @@ function CompanyList({ currentUser }) {
       <div className="row">
         <div className="col-1 col-md-2"></div>
         <div className="col-10 col-md-8">
+          {errors.length ? populateErrors() : null}
           <SearchBar search={search} initialSearchData={searchData} />
           <div className="CompanyList-list">
             {companies.length > 0

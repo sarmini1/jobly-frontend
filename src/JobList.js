@@ -4,55 +4,82 @@ import JoblyApi from "./api";
 import SearchBar from "./SearchBar";
 import Error from "./Error";
 
+const initialSearchFormData = {
+  term: ""
+};
+
 /** JobList component
- * 
+ *
  * Props:
  * - currentUser {}
  * - addJobApp()
- * 
+ *
  * State:
  * - isLoadingJobList: boolean
  * - jobs: []
  * - errors: null or []
- * - searchTerm: ""
- * 
+ * - searchTerm: { term: "" }
+ *
  * Routes -> JobList -> SearchBar
  *                   -> JobCard
  */
 function JobList({ currentUser, addJobApp }) {
 
-  console.log("joblist rendered");
   const [isLoadingJobList, setIsLoadingJobList] = useState(true);
   const [jobs, setJobs] = useState([]);
-  const [errors, setErrors] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [errors, setErrors] = useState([]);
+  const [searchData, setSearchData] = useState(initialSearchFormData);
 
   useEffect(function setJobsOrError() {
-    console.log("joblist use effect")
     async function fetchJobs() {
       try {
-        let jobs = await JoblyApi.getJobs(searchTerm);
-        console.log("jobs is", jobs);
+        setErrors([]);
+        let jobs = await JoblyApi.getJobs(searchData.term);
         setJobs(jobs);
         setIsLoadingJobList(false);
       } catch (err) {
-        setErrors(err);
+        setErrors(errs => [...errs, err]);
         setIsLoadingJobList(false);
       }
     }
     fetchJobs();
-  }, [searchTerm]);
+  }, [searchData]);
 
+  /** search
+   *
+   * Takes in search term and updates loading and searchTerm states to trigger
+   * a re-render. Returns undefined.
+   *
+   * @param {string} searchTerm
+   */
   function search(searchTerm) {
     setIsLoadingJobList(true);
-    setSearchTerm(searchTerm);
-    setIsLoadingJobList(false);
+    setSearchData(currData => (
+      {
+        ...currData,
+        term: searchTerm.term
+      }
+    ));
+  }
+
+  /** populateErrors
+   *
+   * Maps through errors state and renders error component for each
+   *
+   * @returns
+   */
+  function populateErrors() {
+    return (
+      <div>
+        {errors.map((e, idx) => <Error key={idx} error={e} />)}
+      </div>
+    );
   }
 
   if (isLoadingJobList) {
     return (
       <h2>Loading...</h2>
-    )
+    );
   }
 
   return (
@@ -60,8 +87,8 @@ function JobList({ currentUser, addJobApp }) {
       <div className="row">
         <div className="col-1 col-xl-3"></div>
         <div className="col-10 col-xl-6">
-          {errors && errors.map(e => <Error error={e} />)}
-          <SearchBar search={search} initialSearchTerm={searchTerm} />
+          {errors.length ? populateErrors() : null}
+          <SearchBar search={search} initialSearchData={searchData} />
           {jobs.length > 0
             ? jobs.map(job => <JobCard
               key={job.id}

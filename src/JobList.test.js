@@ -3,7 +3,7 @@ import { render, unmountComponentAtNode } from "react-dom";
 import { act } from 'react-dom/test-utils';
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { screen } from '@testing-library/react';
-import CompanyList from './CompanyList';
+import JobList from './JobList';
 
 import JoblyApi from './api';
 import { fireEvent } from '@testing-library/react';
@@ -12,20 +12,22 @@ const fakeUser = {
   applications: new Set()
 };
 
-const fakeCompany1 = {
-  handle: "fake-handle1",
-  name: "Fake Company 1",
-  description: "Not a real company 1",
-  numEmployees: "3",
-  logoUrl: "some-link1",
+const fakeJob1 = {
+  id: 5,
+  title: "Fake job title1",
+  salary: 100,
+  equity: "0.5",
+  companyHandle: "fake-handle1",
+  companyName: "Fake Company 1"
 };
 
-const fakeCompany2 = {
-  handle: "fake-handle2 ",
-  name: "Fake Company 2",
-  description: "Not a real company 2",
-  numEmployees: "3",
-  logoUrl: "some-link2",
+const fakeJob2 = {
+  id: 6,
+  title: "Fake job title2",
+  salary: 200,
+  equity: "0.5",
+  companyHandle: "fake-handle2",
+  companyName: "Fake Company 2"
 };
 
 let container = null;
@@ -48,7 +50,7 @@ it('mounts without crashing', async function () {
   await act(async () => {
     render(
       <MemoryRouter>
-        <CompanyList currentUser={{}} />
+        <JobList currentUser={{}} addJobApp={() => { }} />
       </MemoryRouter>
       , container);
   });
@@ -58,7 +60,7 @@ it("matches snapshot", async function () {
   await act(async () => {
     render(
       <MemoryRouter>
-        <CompanyList currentUser={{}} />
+        <JobList currentUser={{}} addJobApp={() => { }} />
       </MemoryRouter>
       , container);
   });
@@ -66,52 +68,53 @@ it("matches snapshot", async function () {
 });
 
 it("renders all companies on mount with no search term", async function () {
-  const mockGetCompanies =
+  const mockGetJobs =
     jest
-      .spyOn(JoblyApi, "getCompanies")
-      .mockImplementationOnce(() => Promise.resolve([fakeCompany1, fakeCompany2]));
+      .spyOn(JoblyApi, "getJobs")
+      .mockImplementationOnce(() => Promise.resolve([fakeJob1, fakeJob2]));
 
   // Use the asynchronous version of act to apply resolved promises
   await act(async () => {
     render(
       <MemoryRouter>
-        <CompanyList currentUser={{}} />
-      </MemoryRouter>, container);
+        <JobList currentUser={fakeUser} addJobApp={() => { }} />
+      </MemoryRouter>
+      , container);
   });
 
-  expect(mockGetCompanies.mock.calls.length).toEqual(1);
+  expect(mockGetJobs.mock.calls.length).toEqual(1);
 
-  // contains company info for all companies
-  expect(container).toContainHTML("CompanyCard");
   expect(container).toContainHTML("Fake Company 1");
-  expect(container).toContainHTML("Not a real company 1")
+  expect(container).toContainHTML("Fake job title1");
   expect(container).toContainHTML("Fake Company 2");
-  expect(container).toContainHTML("Not a real company 2")
+  expect(container).toContainHTML("Fake job title2");
 
   // remove the mock to ensure tests are completely isolated
-  JoblyApi.getCompanies.mockRestore();
+  JoblyApi.getJobs.mockRestore();
 });
 
 it("renders all companies on mount and updates when search form is submitted", async function () {
-  const mockGetCompanies =
+  const mockGetJobs =
     jest
-      .spyOn(JoblyApi, "getCompanies")
-      .mockImplementationOnce(() => Promise.resolve([fakeCompany1, fakeCompany2]))
-      .mockImplementationOnce(() => Promise.resolve([fakeCompany2]));
+      .spyOn(JoblyApi, "getJobs")
+      .mockImplementationOnce(() => Promise.resolve([fakeJob1, fakeJob2]))
+      .mockImplementationOnce(() => Promise.resolve([fakeJob2]));
 
   // render component as is, should show all companies
   await act(async () => {
     render(
       <MemoryRouter>
-        <CompanyList currentUser={{}} />
+        <JobList currentUser={fakeUser} addJobApp={() => { }} />
       </MemoryRouter>
       , container);
   });
 
-  expect(mockGetCompanies).toHaveBeenCalledWith("");
+  expect(mockGetJobs.mock.calls.length).toEqual(1);
 
   expect(container).toContainHTML("Fake Company 1");
+  expect(container).toContainHTML("Fake job title1");
   expect(container).toContainHTML("Fake Company 2");
+  expect(container).toContainHTML("Fake job title2");
 
   // perform a search such that only one of the companies should show up
   const form = container.querySelector(".SearchBar");
@@ -122,37 +125,39 @@ it("renders all companies on mount and updates when search form is submitted", a
     fireEvent.submit(form);
   });
 
-  expect(mockGetCompanies).toHaveBeenCalledWith("2");
-  expect(mockGetCompanies).toHaveBeenCalledTimes(2);
+  expect(mockGetJobs).toHaveBeenCalledWith("2");
+  expect(mockGetJobs).toHaveBeenCalledTimes(2);
 
+  expect(container).not.toContainHTML("Fake job title1");
   expect(container).not.toContainHTML("Fake Company 1");
-  expect(container).not.toContainHTML("Not a real company 1")
   expect(container).toContainHTML("Fake Company 2");
-  expect(container).toContainHTML("Not a real company 2")
+  expect(container).toContainHTML("Fake job title2");
 
-  JoblyApi.getCompanies.mockRestore();
+  JoblyApi.getJobs.mockRestore();
 });
 
 it("renders all companies, renders none, renders some", async function () {
-  const mockGetCompanies =
+  const mockGetJobs =
     jest
-      .spyOn(JoblyApi, "getCompanies")
-      .mockImplementationOnce(() => Promise.resolve([fakeCompany1, fakeCompany2]))
+      .spyOn(JoblyApi, "getJobs")
+      .mockImplementationOnce(() => Promise.resolve([fakeJob1, fakeJob2]))
       .mockImplementationOnce(() => Promise.resolve([]))
-      .mockImplementationOnce(() => Promise.resolve([fakeCompany1]))
+      .mockImplementationOnce(() => Promise.resolve([fakeJob2]));
 
   // render component as is, should show all companies
   await act(async () => {
     render(
       <MemoryRouter>
-        <CompanyList currentUser={{}} />
+        <JobList currentUser={fakeUser} addJobApp={() => { }} />
       </MemoryRouter>
       , container);
   });
 
-  expect(mockGetCompanies).toHaveBeenCalledWith("");
+  expect(mockGetJobs).toHaveBeenCalledWith("");
 
   expect(container).toContainHTML("Fake Company 1");
+  expect(container).toContainHTML("Fake job title1");
+  expect(container).toContainHTML("Fake job title2");
   expect(container).toContainHTML("Fake Company 2");
 
   // perform a search that won't match any companies
@@ -164,10 +169,10 @@ it("renders all companies, renders none, renders some", async function () {
     fireEvent.submit(form);
   });
 
-  expect(mockGetCompanies).toHaveBeenCalledWith("none like this");
+  expect(mockGetJobs).toHaveBeenCalledWith("none like this");
 
-  expect(container).not.toContainHTML("Fake Company 1");
-  expect(container).not.toContainHTML("Not a real company 1")
+  expect(container).not.toContainHTML("Fake job title1");
+  expect(container).not.toContainHTML("Fake job title2");
   expect(container).toContainHTML("No results found");
 
   // reselect form and searchbar elements now that component has re-rendered
@@ -176,42 +181,42 @@ it("renders all companies, renders none, renders some", async function () {
 
   // search again for just a subset of companies
   await act(async () => {
-    fireEvent.change(searchInput, { target: { value: "1" } });
+    fireEvent.change(searchInput, { target: { value: "2" } });
     fireEvent.submit(form);
   });
 
-  expect(mockGetCompanies).toHaveBeenCalledWith("1");
-  expect(mockGetCompanies).toHaveBeenCalledTimes(3);
+  expect(mockGetJobs).toHaveBeenCalledWith("2");
+  expect(mockGetJobs).toHaveBeenCalledTimes(3);
 
-  expect(container).toContainHTML("Fake Company 1");
-  expect(container).not.toContainHTML("Fake Company 2");
+  expect(container).toContainHTML("Fake Company 2");
+  expect(container).not.toContainHTML("Fake Company 1");
   expect(container).not.toContainHTML("No results found");
 
-  JoblyApi.getCompanies.mockRestore();
+  JoblyApi.getJobs.mockRestore();
 });
 
 it("handles errors when fetching data from api", async () => {
-  const mockGetCompanies =
+  const mockGetJobs =
     jest
-      .spyOn(JoblyApi, "getCompanies")
+      .spyOn(JoblyApi, "getJobs")
       .mockImplementationOnce(() => Promise.reject("mock error message"));
 
   await act(async () => {
     render(
       <MemoryRouter>
-        <CompanyList currentUser={{}} />
+        <JobList currentUser={fakeUser} addJobApp={() => { }} />
       </MemoryRouter>
       , container);
   });
 
-  expect(mockGetCompanies.mock.calls.length).toEqual(1);
+  expect(mockGetJobs.mock.calls.length).toEqual(1);
 
   // contains error element with message
   const error = container.querySelector(".Error");
   expect(error).toContainHTML("mock error message");
 
-  // doesn't contain any company info
-  expect(container).not.toContainHTML("CompanyCard");
+  // doesn't contain any job info
+  expect(container).not.toContainHTML("Fake job title1");
 
-  JoblyApi.getCompanies.mockRestore();
+  JoblyApi.getJobs.mockRestore();
 });
