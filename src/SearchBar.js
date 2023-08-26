@@ -2,34 +2,38 @@ import { useState } from "react";
 import "./SearchBar.css";
 
 /**SearchBar Component
- * 
- * Props: 
+ *
+ * Props:
  * - search()
- * - initialSearchTerm ""
- * 
+ * - initialSearchTerm: { term: "" }
+ *
  * State:
- * - searchTerm: ""
- * 
+ * - searchData: { term: "" }
+ *
  * JobList -> SearchBar
  * CompanyList -> SearchBar
  */
-function SearchBar({ search, initialSearchTerm }) {
-  const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
+function SearchBar({ search, initialSearchData }) {
+  const [searchData, setSearchData] = useState(initialSearchData);
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    search(searchTerm);
+    search(searchData);
   }
 
   function handleChange(evt) {
-    setSearchTerm(evt.target.value);
+    const { name, value } = evt.target;
+    setSearchData(currData => ({ ...currData, [name]: value }));
   }
   return (
   <form className="SearchBar" onSubmit={handleSubmit}>
-      <input 
+      <label htmlFor="term-input"></label>
+      <input
+        id="term-input"
         type="text"
-        value={searchTerm}
-        onChange={handleChange} 
+        name="term"
+        value={searchData.term}
+        onChange={handleChange}
         placeholder="Enter search term..."/>
       <button className="btn submit">Submit</button>
   </form>
