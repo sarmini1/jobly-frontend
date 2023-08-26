@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<div>
+  <div
+    class="LoginForm"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="col-1 col-sm-2 col-lg-4"
+      />
+      <div
+        class="col-10 col-sm-8 col-lg-4"
+      >
+        <h3>
+          Log in
+        </h3>
+        <form
+          class=""
+        >
+          <label
+            class="form-label"
+            for="LoginForm-username"
+          >
+            Username
+          </label>
+          <input
+            autocomplete="username"
+            class="form-control"
+            id="LoginForm-username"
+            name="username"
+            required=""
+            type="text"
+            value=""
+          />
+          <label
+            class="form-label"
+            for="LoginForm-password"
+          >
+            Password
+          </label>
+          <input
+            autocomplete="current-password"
+            class="form-control"
+            id="LoginForm-password"
+            name="password"
+            required=""
+            type="password"
+            value=""
+          />
+          <button
+            class="btn"
+            type="submit"
+          >
+            Login!
+          </button>
+        </form>
+      </div>
+      <div
+        class="col-1 col-sm-2 col-lg-4"
+      />
+    </div>
+  </div>
+</div>
+`;
