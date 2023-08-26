@@ -26,7 +26,7 @@ function SearchBar({ search, initialSearchData }) {
     setSearchData(currData => ({ ...currData, [name]: value }));
   }
   return (
-  <form className="SearchBar" onSubmit={handleSubmit}>
+    <form className="SearchBar" onSubmit={handleSubmit}>
       <label htmlFor="term-input"></label>
       <input
         id="term-input"
@@ -34,10 +34,10 @@ function SearchBar({ search, initialSearchData }) {
         name="term"
         value={searchData.term}
         onChange={handleChange}
-        placeholder="Enter search term..."/>
+        placeholder="Enter search term..." />
       <button className="btn submit">Submit</button>
-  </form>
-  )
+    </form>
+  );
 }
 
 export default SearchBar;
