@@ -1,8 +1,7 @@
 import React from 'react';
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from 'react-dom/test-utils';
-import { MemoryRouter, Routes, Route } from "react-router-dom";
-import { screen } from '@testing-library/react';
+import { MemoryRouter } from "react-router-dom";
 import JobList from './JobList';
 
 import JoblyApi from './api';
@@ -67,7 +66,7 @@ it("matches snapshot", async function () {
   expect(container).toMatchSnapshot();
 });
 
-it("renders all companies on mount with no search term", async function () {
+it("renders all jobs on mount with no search term", async function () {
   const mockGetJobs =
     jest
       .spyOn(JoblyApi, "getJobs")
@@ -93,14 +92,14 @@ it("renders all companies on mount with no search term", async function () {
   JoblyApi.getJobs.mockRestore();
 });
 
-it("renders all companies on mount and updates when search form is submitted", async function () {
+it("renders all jobs on mount and updates when search form is submitted", async function () {
   const mockGetJobs =
     jest
       .spyOn(JoblyApi, "getJobs")
       .mockImplementationOnce(() => Promise.resolve([fakeJob1, fakeJob2]))
       .mockImplementationOnce(() => Promise.resolve([fakeJob2]));
 
-  // render component as is, should show all companies
+  // render component as is, should show all jobs
   await act(async () => {
     render(
       <MemoryRouter>
@@ -116,7 +115,7 @@ it("renders all companies on mount and updates when search form is submitted", a
   expect(container).toContainHTML("Fake Company 2");
   expect(container).toContainHTML("Fake job title2");
 
-  // perform a search such that only one of the companies should show up
+  // perform a search such that only one of the jobs should show up
   const form = container.querySelector(".SearchBar");
   const searchInput = container.querySelector(".SearchBar input");
 
@@ -136,7 +135,7 @@ it("renders all companies on mount and updates when search form is submitted", a
   JoblyApi.getJobs.mockRestore();
 });
 
-it("renders all companies, renders none, renders some", async function () {
+it("renders all jobs, renders none, renders some", async function () {
   const mockGetJobs =
     jest
       .spyOn(JoblyApi, "getJobs")
@@ -144,7 +143,7 @@ it("renders all companies, renders none, renders some", async function () {
       .mockImplementationOnce(() => Promise.resolve([]))
       .mockImplementationOnce(() => Promise.resolve([fakeJob2]));
 
-  // render component as is, should show all companies
+  // render component as is, should show all jobs
   await act(async () => {
     render(
       <MemoryRouter>
@@ -160,7 +159,7 @@ it("renders all companies, renders none, renders some", async function () {
   expect(container).toContainHTML("Fake job title2");
   expect(container).toContainHTML("Fake Company 2");
 
-  // perform a search that won't match any companies
+  // perform a search that won't match any jobs
   let form = container.querySelector(".SearchBar");
   let searchInput = container.querySelector(".SearchBar input");
 
@@ -179,7 +178,7 @@ it("renders all companies, renders none, renders some", async function () {
   form = container.querySelector(".SearchBar");
   searchInput = container.querySelector(".SearchBar input");
 
-  // search again for just a subset of companies
+  // search again for just a subset of jobs
   await act(async () => {
     fireEvent.change(searchInput, { target: { value: "2" } });
     fireEvent.submit(form);
